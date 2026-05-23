@@ -18,7 +18,7 @@ const headers = {
     "Mozilla/5.0 (Linux; Android 15) AppleWebKit/537.36 Chrome/148.0.7778.121 Mobile Safari/537.36"
 };
 
-// Generate email
+// Generate temp email
 app.post("/generate", async (req, res) => {
   try {
     const response = await axios.post(
@@ -28,12 +28,16 @@ app.post("/generate", async (req, res) => {
     );
 
     res.json(response.data);
+
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
   }
 });
 
-// Fetch inbox (first email only)
+// Fetch ALL emails
 app.post("/messages", async (req, res) => {
   try {
     const { email_id } = req.body;
@@ -54,27 +58,36 @@ app.post("/messages", async (req, res) => {
     const emails = response.data.emails || [];
 
     if (!emails.length) {
-      return res.json({ success: true, message: "No emails found" });
+      return res.json({
+        success: true,
+        emails: []
+      });
     }
 
-    const mail = emails[0];
-
-    res.json({
-      success: true,
+    const formatted = emails.map(mail => ({
+      id: mail.id,
       subject: mail.subject,
       senderName: mail.senderName,
       senderEmail: mail.senderEmail,
-      formattedDate: mail.formattedDate,
+      date: mail.formattedDate,
       body: mail.body
+    }));
+
+    res.json({
+      success: true,
+      emails: formatted
     });
 
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
   }
 });
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("Server running on " + PORT);
+  console.log("Server running on port " + PORT);
 });
