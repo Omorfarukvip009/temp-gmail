@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temp Mail App</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="container">
+
+  <h1>Temp Mail System</h1>
+
+  <button id="generateBtn">✨ Generate Email</button>
+
+  <div class="card">
+
+    <label>Email</label>
+    <div class="row">
+      <input id="email" readonly>
+      <button onclick="copy('email')">Copy</button>
+    </div>
+
+    <label>Email ID</label>
+    <div class="row">
+      <input id="emailId">
+      <button onclick="copy('emailId')">Copy</button>
+    </div>
+
+  </div>
+
+  <button id="fetchBtn">📩 Fetch Inbox</button>
+  <button id="autoBtn">🔄 Auto Refresh OFF</button>
+
+  <div id="result"></div>
+
+  <!-- CREDIT -->
+  <div class="credit">
+    <span id="typing"></span><span class="cursor">|</span>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
